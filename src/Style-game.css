@@ -43,3 +43,11 @@
     border-radius: 4px;
     background: rgb(153, 153, 223);
 }
+
+.Timer {
+    width: 100px;
+    height: 50px;
+    margin: 20px;
+    border-radius: 4px;
+    background: rgb(209, 209, 214);
+}

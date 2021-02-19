@@ -3,41 +3,56 @@ import './Style-game.css'
 
 const ALL_HOLES = 9;
 const TIME_FOR_LIFE_MOLES_MS = 2500;
-const TIME_FOR_CHECK_INTERVAL = 500;
+const TIME_FOR_CHECK_INTERVAL = 100;
+const START_TIME = Date.now();
+let ONE_MINUTE_MS = 60000;
 
 export default class Game extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            // moles: new Array (9),
-            moles: [1,2,3],
-            hitting_mole_counter: 0
-            }
+            moles: new Array (9),
+            score: 0,
+            timer: ONE_MINUTE_MS
+            };
+        
+        this.StartGame = this.StartGame.bind(this);
+        }
+
+        componentDidMount () {
+            this.StartGame();
         }
 
     StartGame() {
 
-        setInterval(
+        const interval = setInterval(
             () => {
             const newMoles = [...this.state.moles];
-            let newTime = Date.now();
+            let currentTime = Date.now();
+            let newTimer = this.state.timer
+
+            newTimer = (newTimer - TIME_FOR_CHECK_INTERVAL);
+            console.log(newTimer);
+            this.setState({timer: newTimer});
+        
 
                 for (let index = 0; index < ALL_HOLES; index++) {
                     if(newMoles[index] === undefined) {
                         let probability = Math.random();
-                        if (probability < 0.0005) {
+                        if (probability < 0.01) {
                             newMoles[index] = Date.now();
-                            console.log(`New moles: ${index} : ${newMoles[index]}`)
+                            // console.log(`New moles: ${index} : ${newMoles[index]}`)
                         }
                     }
 
-                    if (newTime - newMoles[index] > TIME_FOR_LIFE_MOLES_MS) {
+                    if (currentTime - newMoles[index] > TIME_FOR_LIFE_MOLES_MS) {
                         delete newMoles[index];
-                        console.log(`${index} deleted ${Date.now()}`);
+                        // console.log(`${index} deleted ${Date.now()}`);
                     }
                 }
                 this.setState({moles: [...newMoles]});
-                console.log(this.state.moles);
+
+                // console.log(this.state.moles);
         }, TIME_FOR_CHECK_INTERVAL
         );
     }
@@ -45,19 +60,19 @@ export default class Game extends React.Component {
     DeletingTheMole(event, key) {
         event.preventDefault();
 
-        let newCounter = this.state.hitting_mole_counter;
+        let newCounter = this.state.score;
         const newMoles = [...this.state.moles];
+        
         if (newMoles[key] !== undefined) {
-        newMoles[key] = undefined;
-        newCounter += 10;
+            newMoles[key] = undefined;
+            newCounter += 10;
         }
-        this.setState({moles: [...newMoles], hitting_mole_counter: newCounter});
+        this.setState({moles: [...newMoles], score: newCounter});
     }
 
 
 
     render() {
-        this.StartGame();
         const holes = [];
 
         for (let i = 0; i < 9; i++) {
@@ -66,7 +81,11 @@ export default class Game extends React.Component {
 
         return (
             <div className="Conteiner">
-                <div className={'AllHoles'}>{holes} <div className={'Counter'}>{this.state.hitting_mole_counter}</div> </div>     
+                <div className={'AllHoles'}>
+                    {holes}
+                    <div className={'Counter'}>{this.state.score}</div>
+                    <div className={'Timer'}>{Math.floor(this.state.timer / 1000)}</div>
+                </div>     
             </div>
         )
     }

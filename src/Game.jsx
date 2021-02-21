@@ -1,13 +1,11 @@
 import React from 'react';
 import './Style-game.css';
-import TryAgain from './Try_again';
 import timer from './images/clock.png';
 import score from './images/score.png';
 
 const ALL_HOLES = 9;
 const TIME_FOR_LIFE_MOLES_MS = 2500;
 const TIME_FOR_CHECK_INTERVAL = 100;
-// const START_TIME = Date.now();
 let ONE_MINUTE_MS = 60000;
 const BONUS_TIME_MS = 250;
 
@@ -17,9 +15,7 @@ export default class Game extends React.Component {
         this.state = {
             moles: new Array (9),
             score: 0,
-            timer: ONE_MINUTE_MS,
-            onGameEnd: false,
-            isPushedTryAgain: false
+            timer: ONE_MINUTE_MS
             };
         
         this.StartGame = this.StartGame.bind(this);
@@ -46,7 +42,7 @@ export default class Game extends React.Component {
                     this.setState({timer: newTimer});
                 } else {
                     stopInterval();
-                    this.setState({onGameEnd: true});
+                    this.props.onGameEnd();
                     return;
                 }
 
@@ -90,30 +86,26 @@ export default class Game extends React.Component {
 
     render() {
 
-        if (this.state.onGameEnd === false || this.state.isPushedStart === true) {
         const holes = [];
 
-            for (let i = 0; i < 9; i++) {
-                holes.push(<div key={i} className={this.state.moles[i] ? 'MoleHole' : 'Hole'} onClick={(event) => this.DeletingTheMole(event, i)} ></div>);
-            }
-            return (
-                <div>
-                    <div className={'AllHoles'}>
-                        {holes}
-                        <div className={'Items'}>
-                        <img className={'Image'} src={score} alt="score" />
-                            <div className={'Numbers'}>{this.state.score}</div>
-                        </div>
-                        <div className={'Items'}>
-                            <img className={'Image'} src={timer} alt="timer" />
-                            <div className={'Numbers'}>{Math.floor(this.state.timer / 1000)}</div>
-                        </div>
-                    </div>     
-                </div>
-            )
-        } else if (this.state.isPushedTryAgain === false) {
-            return <TryAgain pushedTryAgain = {() => this.setState({ isPushedTryAgain: true }) } />
+        for (let i = 0; i < 9; i++) {
+            holes.push(<div key={i} className={this.state.moles[i] ? 'MoleHole' : 'Hole'} onClick={(event) => this.DeletingTheMole(event, i)} ></div>);
         }
+        return (
+            <div>
+                <div className={'AllHoles'}>
+                    {holes}
+                    <div className={'Items'}>
+                    <img className={'Image'} src={score} alt="score" />
+                        <div className={'Numbers'}>{this.state.score}</div>
+                    </div>
+                    <div className={'Items'}>
+                        <img className={'Image'} src={timer} alt="timer" />
+                        <div className={'Numbers'}>{Math.floor(this.state.timer / 1000)}</div>
+                    </div>
+                </div>     
+            </div>
+        )
     }
 }
 

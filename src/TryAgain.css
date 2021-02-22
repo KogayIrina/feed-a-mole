@@ -1,11 +1,11 @@
 .Conteiner {
-  background: linear-gradient(rgb(41, 245, 41) rgb(22, 128, 22));
+  background: linear-gradient(rgb(33, 126, 33), rgb(32, 109, 32), rgb(3, 83, 3));
   width: 400px;
   height: 400px;
 }
 
 .Wrapper {
-    margin-bottom: 50px;
+  margin-bottom: 50px;
 }
 
 .TryAgainButton {
@@ -13,14 +13,12 @@
     height: 65px;
     margin-left: 75px;
     margin-right: 75px;
-    margin-bottom: 80px;
+    margin-bottom: 20px;
     font-family: Arial,Helvetica,FreeSans,"Liberation Sans","Nimbus Sans L",sans-serif;
     font-size: 1.5em;
     font-weight: 700;
     color: rgb(245,245,245);
     text-shadow: 0 -1px rgba(0,0,0,.1);
-    text-decoration: none;
-    user-select: none;
     padding: .3em 1em;
     outline: none;
     border: none;
@@ -30,24 +28,6 @@
     -webkit-animation: pulsate 1.2s linear infinite;
     animation: pulsate 1.2s linear infinite;
 }
-
-.TryAgainButton:hover {
-    -webkit-animation-play-state: paused;
-    animation-play-state: paused;
-    cursor: pointer;
-  }
-  .TryAgainButton:active {
-    top: 1px;
-    color: #fff;
-    text-shadow: 0 -1px rgba(0,0,0,.3), 0 0 5px #ffd, 0 0 8px #fff;
-    box-shadow: 0 -1px 3px rgba(0,0,0,.3), 0 1px 1px #fff, inset 0 1px 2px rgba(0,0,0,.8), inset 0 -1px 0 rgba(0,0,0,.05);
-  }
-  @-webkit-keyframes pulsate {
-    50% {color: #fff; text-shadow: 0 -1px rgba(0,0,0,.3), 0 0 5px #ffd, 0 0 8px #fff;}
-  }
-  @keyframes pulsate {
-    50% {color: #fff; text-shadow: 0 -1px rgba(0,0,0,.3), 0 0 5px #ffd, 0 0 8px #fff;}
-  }
 
 .GameOver {
     display: flex;
@@ -59,7 +39,6 @@
     font-family: 'Righteous', cursive;
     font-weight: normal;
     margin-left: 20px;
-    text-transform: uppercase;
     text-shadow: 2px 2px 0  rgb(17, 179, 30);
 }
 
@@ -70,14 +49,17 @@
 }
 
 .Results {
-  width: 150px;
-  margin-left: 150px;
+  display: flexbox;
+  align-items: center;
+  justify-content: center;
+  width: 140px;
+  margin-left: 140px;
   margin-bottom: 10px;
-  font-size: 15px;
+  font-size: 17px;
   color: #fff;
 }
 
-h6 {
-    margin-bottom: 0;
-    margin-block-start: 2px;  
+.Link {
+  font-size: 15px;
+  color: #fff;
 }

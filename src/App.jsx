@@ -15,7 +15,7 @@ export default class App extends React.Component {
         this.state = {
             lastGameScore: undefined,
             allMoles: undefined,
-            hittedMoles: undefined,
+            fedMoles: undefined,
             page: PAGES.START
         };
     }
@@ -24,9 +24,9 @@ export default class App extends React.Component {
         if (this.state.page === PAGES.START) {
             return (<Start pushedStart={() => this.setState({ page: PAGES.GAME }) } />);
         } else if (this.state.page === PAGES.GAME){
-            return (<Game onGameEnd={(lastGameScore, allMoles, hittedMoles) => this.setState({ page: PAGES.END, lastGameScore, allMoles, hittedMoles })}/>);
+            return (<Game onGameEnd={(lastGameScore, allMoles, fedMoles) => this.setState({ page: PAGES.END, lastGameScore, allMoles, fedMoles })}/>);
         } else {
-            return <TryAgain score={this.state.lastGameScore} moles={this.state.allMoles} hittedMoles={this.state.hittedMoles} pushedTryAgain={() => this.setState({ page: PAGES.GAME }) }/>
+            return <TryAgain score={this.state.lastGameScore} moles={this.state.allMoles} fedMoles={this.state.fedMoles} pushedTryAgain={() => this.setState({ page: PAGES.GAME }) }/>
         }
 
     }

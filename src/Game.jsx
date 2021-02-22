@@ -1,5 +1,5 @@
 import React from 'react';
-import './Style-game.css';
+import './Game.css';
 import timer from './images/clock.png';
 import score from './images/score.png';
 
@@ -7,7 +7,6 @@ const ALL_HOLES = 9;
 const TIME_FOR_LIFE_MOLES_MS = 2500;
 const TIME_FOR_CHECK_INTERVAL = 100;
 let ONE_MINUTE_MS = 60000;
-const BONUS_TIME_MS = 250;
 
 export default class Game extends React.Component {
     constructor(props) {
@@ -18,7 +17,7 @@ export default class Game extends React.Component {
             timer: ONE_MINUTE_MS,
         };
         this.allMoles = 0;
-        this.hittedMoles = 0;
+        this.fedMoles = 0;
         
         this.StartGame = this.StartGame.bind(this);
     }
@@ -38,14 +37,14 @@ export default class Game extends React.Component {
             const newMoles = [...this.state.moles];
             let currentCountMoles = this.allMoles;
             let currentTime = Date.now();
-            let newTimer = this.state.timer
+            let timeLeft = this.state.timer
 
-                if (newTimer >= TIME_FOR_CHECK_INTERVAL) {
-                    newTimer = (newTimer - TIME_FOR_CHECK_INTERVAL);
-                    this.setState({timer: newTimer});
+                if (timeLeft >= TIME_FOR_CHECK_INTERVAL) {
+                    timeLeft = (timeLeft - TIME_FOR_CHECK_INTERVAL);
+                    this.setState({timer: timeLeft});
                 } else {
                     stopInterval();
-                    this.props.onGameEnd(this.state.score, this.allMoles, this.hittedMoles);
+                    this.props.onGameEnd(this.state.score, this.allMoles, this.fedMoles);
                     return;
                 }
 
@@ -55,56 +54,50 @@ export default class Game extends React.Component {
                         if (probability < 0.02) {
                             newMoles[index] = Date.now();
                             currentCountMoles += 1;
-                            // console.log(currentMoles);
                         }
                     }
 
                     if (currentTime - newMoles[index] > TIME_FOR_LIFE_MOLES_MS) {
                         delete newMoles[index];
-                        // console.log(`${index} deleted ${Date.now()}`);
                     }
                 }
                 this.allMoles = currentCountMoles;
                 this.setState({moles: [...newMoles]});
-
-                // console.log(this.state.moles);
         }, TIME_FOR_CHECK_INTERVAL
         );
     }
 
-    onMoleHit(key) {
-        let newCounter = this.state.score;
-        let countHittedMoles = this.hittedMoles;
+    onMoleFed(key) {
+        let newScore = this.state.score;
+        let countFedMoles = this.fedMoles;
         const newMoles = [...this.state.moles];
         
         if (newMoles[key] !== undefined) {
             newMoles[key] = undefined;
-            newCounter += 5;
-            countHittedMoles += 1;
+            newScore += 5;
+            countFedMoles += 1;
         }
-        this.hittedMoles = countHittedMoles;
-        this.setState({moles: [...newMoles], score: newCounter});
+        this.fedMoles = countFedMoles;
+        this.setState({moles: [...newMoles], score: newScore});
     }
-
-
 
     render() {
         const holes = [];
 
         for (let i = 0; i < 9; i++) {
-            holes.push(<div key={i} className={this.state.moles[i] ? 'MoleHole' : 'Hole'} onClick={() => this.onMoleHit(i)} ></div>);
+            holes.push(<div key={i} className={this.state.moles[i] ? 'MoleHole' : 'Hole'} onClick={() => this.onMoleFed(i)} ></div>);
         }
         return (
             <div>
                 <div className={'AllHoles'}>
                     {holes}
-                    <div className={'Items'}>
-                    <img className={'Image'} src={score} alt="score" />
-                        <div className={'Numbers'}>{this.state.score}</div>
+                    <div className={'Stat'}>
+                        <img src={score} alt="score"/>
+                        <span>{this.state.score}</span>
                     </div>
-                    <div className={'Items'}>
-                        <img className={'Image'} src={timer} alt="timer" />
-                        <div className={'Numbers'}>{Math.floor(this.state.timer / 1000)}</div>
+                    <div className={'Stat'}>
+                        <img src={timer} alt="timer"/>
+                        <span>{Math.floor(this.state.timer / 1000)}</span>
                     </div>
                 </div>     
             </div>

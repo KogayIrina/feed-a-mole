@@ -17,7 +17,7 @@ export default class Start extends React.Component {
             <div className="Conteiner">
                 <div>
                     <img className={'Mole'} src={mole} alt="mole" />
-                    <h1>WHACK-A-MOLE</h1>
+                    <h1>FEED-A-MOLE</h1>
                     <h2 className={"Play"}>Let's play!</h2>
                     <button className={'StartButton'} onClick={this.handleClick}>START</button>
                 </div>

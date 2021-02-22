@@ -7,7 +7,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgb(7, 73, 22);
+  background: linear-gradient(rgb(33, 126, 33), rgb(32, 109, 32), rgb(3, 83, 3));
   width: 400px;
   height: 400px;
   margin-top: 150px;

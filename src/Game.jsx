@@ -13,17 +13,17 @@ export default class Game extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            moles: new Array (9),
+            moles: new Array(9),
             score: 0,
             timer: ONE_MINUTE_MS
-            };
+        };
         
         this.StartGame = this.StartGame.bind(this);
-        }
+    }
 
-        componentDidMount () {
-            this.StartGame();
-        }
+    componentDidMount () {
+        this.StartGame();
+    }
 
     StartGame() {
 
@@ -42,7 +42,7 @@ export default class Game extends React.Component {
                     this.setState({timer: newTimer});
                 } else {
                     stopInterval();
-                    this.props.onGameEnd();
+                    this.props.onGameEnd(this.state.score);
                     return;
                 }
 
@@ -67,9 +67,7 @@ export default class Game extends React.Component {
         );
     }
 
-    DeletingTheMole(event, key) {
-        event.preventDefault();
-
+    onMoleHit(key) {
         let newCounter = this.state.score;
         let newTimer = this.state.timer;
         const newMoles = [...this.state.moles];
@@ -85,11 +83,10 @@ export default class Game extends React.Component {
 
 
     render() {
-
         const holes = [];
 
         for (let i = 0; i < 9; i++) {
-            holes.push(<div key={i} className={this.state.moles[i] ? 'MoleHole' : 'Hole'} onClick={(event) => this.DeletingTheMole(event, i)} ></div>);
+            holes.push(<div key={i} className={this.state.moles[i] ? 'MoleHole' : 'Hole'} onClick={() => this.onMoleHit(i)} ></div>);
         }
         return (
             <div>

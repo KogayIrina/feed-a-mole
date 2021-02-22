@@ -1,7 +1,7 @@
 import React from 'react';
 import Start from './Start';
 import Game from './Game';
-import TryAgain from './Try_again';
+import TryAgain from './TryAgain';
 
 const PAGES = {
     START: 'start',
@@ -13,6 +13,7 @@ export default class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            lastGameScore: undefined,
             page: PAGES.START
         };
     }
@@ -21,9 +22,9 @@ export default class App extends React.Component {
         if (this.state.page === PAGES.START) {
             return (<Start pushedStart={() => this.setState({ page: PAGES.GAME }) } />);
         } else if (this.state.page === PAGES.GAME){
-            return (<Game onGameEnd={() => this.setState({ page: PAGES.END })}/>);
+            return (<Game onGameEnd={lastGameScore => this.setState({ page: PAGES.END, lastGameScore })}/>);
         } else {
-            return <TryAgain pushedTryAgain={() => this.setState({ page: PAGES.GAME }) }/>
+            return <TryAgain score={this.state.lastGameScore} pushedTryAgain={() => this.setState({ page: PAGES.GAME }) }/>
         }
 
     }

@@ -15,8 +15,10 @@ export default class Game extends React.Component {
         this.state = {
             moles: new Array(9),
             score: 0,
-            timer: ONE_MINUTE_MS
+            timer: ONE_MINUTE_MS,
         };
+        this.allMoles = 0;
+        this.hittedMoles = 0;
         
         this.StartGame = this.StartGame.bind(this);
     }
@@ -34,6 +36,7 @@ export default class Game extends React.Component {
         const interval = setInterval(
             () => {
             const newMoles = [...this.state.moles];
+            let currentCountMoles = this.allMoles;
             let currentTime = Date.now();
             let newTimer = this.state.timer
 
@@ -42,7 +45,7 @@ export default class Game extends React.Component {
                     this.setState({timer: newTimer});
                 } else {
                     stopInterval();
-                    this.props.onGameEnd(this.state.score);
+                    this.props.onGameEnd(this.state.score, this.allMoles, this.hittedMoles);
                     return;
                 }
 
@@ -51,7 +54,8 @@ export default class Game extends React.Component {
                         let probability = Math.random();
                         if (probability < 0.02) {
                             newMoles[index] = Date.now();
-                            // console.log(`New moles: ${index} : ${newMoles[index]}`)
+                            currentCountMoles += 1;
+                            // console.log(currentMoles);
                         }
                     }
 
@@ -60,6 +64,7 @@ export default class Game extends React.Component {
                         // console.log(`${index} deleted ${Date.now()}`);
                     }
                 }
+                this.allMoles = currentCountMoles;
                 this.setState({moles: [...newMoles]});
 
                 // console.log(this.state.moles);
@@ -69,15 +74,16 @@ export default class Game extends React.Component {
 
     onMoleHit(key) {
         let newCounter = this.state.score;
-        let newTimer = this.state.timer;
+        let countHittedMoles = this.hittedMoles;
         const newMoles = [...this.state.moles];
         
         if (newMoles[key] !== undefined) {
             newMoles[key] = undefined;
             newCounter += 5;
-            newTimer += BONUS_TIME_MS;
+            countHittedMoles += 1;
         }
-        this.setState({moles: [...newMoles], score: newCounter, timer: newTimer});
+        this.hittedMoles = countHittedMoles;
+        this.setState({moles: [...newMoles], score: newCounter});
     }
 
 

@@ -14,6 +14,8 @@ export default class App extends React.Component {
         super(props);
         this.state = {
             lastGameScore: undefined,
+            allMoles: undefined,
+            hittedMoles: undefined,
             page: PAGES.START
         };
     }
@@ -22,9 +24,9 @@ export default class App extends React.Component {
         if (this.state.page === PAGES.START) {
             return (<Start pushedStart={() => this.setState({ page: PAGES.GAME }) } />);
         } else if (this.state.page === PAGES.GAME){
-            return (<Game onGameEnd={lastGameScore => this.setState({ page: PAGES.END, lastGameScore })}/>);
+            return (<Game onGameEnd={(lastGameScore, allMoles, hittedMoles) => this.setState({ page: PAGES.END, lastGameScore, allMoles, hittedMoles })}/>);
         } else {
-            return <TryAgain score={this.state.lastGameScore} pushedTryAgain={() => this.setState({ page: PAGES.GAME }) }/>
+            return <TryAgain score={this.state.lastGameScore} moles={this.state.allMoles} hittedMoles={this.state.hittedMoles} pushedTryAgain={() => this.setState({ page: PAGES.GAME }) }/>
         }
 
     }

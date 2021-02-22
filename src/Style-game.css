@@ -40,7 +40,7 @@
 .Items {
     display: flex;
     width: 150px;
-    height: 35px;
+    height: 40px;
     margin-left: 50px;
     border-radius: 4px;
     color: #fff;
@@ -58,4 +58,5 @@
 
 .Numbers {
     margin-left: 10px;
+    margin-bottom: 2px;
 }

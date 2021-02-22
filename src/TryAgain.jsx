@@ -10,7 +10,7 @@ export default class TryAgain extends React.Component {
             <div className="Conteiner" >
                 <div className={'Wrapper'}>
                     <h2 className={'GameOver'}>GAME OVER</h2>
-                    <div>Your score: {this.props.score}</div>
+                    <div className={'Results'}>Your score: {this.props.score} <br />All Moles: {this.props.moles} You hitted {this.props.hittedMoles} moles</div>
                     <button className={'TryAgainButton'} onClick={this.props.pushedTryAgain}>Try again!</button>
                     <div className={'Copyright'}>
                         <h6>Made by Irina Kogay</h6>

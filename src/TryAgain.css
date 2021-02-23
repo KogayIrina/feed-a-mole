@@ -37,7 +37,7 @@
 .GameOver {
   color: #fff;
   margin: 0;
-  font-family: 'Righteous', cursive;
+  font-family: 'Times New Roman', Times, serif;
   font-size: 47px;
   text-shadow: 2px 2px 0  rgb(17, 179, 30);
 }

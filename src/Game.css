@@ -1,0 +1,37 @@
+.Hole {
+    width: 64px;
+    height: 64px;
+    margin: 20px;
+    background-image: url('./images/hole.png');
+}
+
+.AllHoles {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    flex-direction: row;
+    width: 400px;
+    height: 400px;
+    margin-top: 150px;
+    background: linear-gradient(rgb(33, 126, 33), rgb(32, 109, 32), rgb(3, 83, 3));
+    cursor: url('./images/strawberry.png'), pointer;
+}
+
+.MoleHole {
+    width: 64px;
+    height: 64px;
+    margin: 20px;
+    background-image: url('./images/mole.png');
+}
+
+.Stat {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 200px;
+    color: #fff;
+    font-family: 'Akaya Telivigala', cursive;
+    font-size: 30px;
+}
+

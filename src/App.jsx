@@ -6,7 +6,7 @@ import TryAgain from './TryAgain';
 const PAGES = {
     START: 'start',
     GAME: 'game',
-    END: 'end'
+    TRY_AGAIN: 'try-again'
 }
 
 export default class App extends React.Component {
@@ -14,21 +14,25 @@ export default class App extends React.Component {
         super(props);
         this.state = {
             lastGameScore: undefined,
-            allMoles: undefined,
-            fedMoles: undefined,
+            lastGameMolesShown: undefined,
+            lastGameMolesFed: undefined,
             page: PAGES.START
         };
     }
 
     render() {
         if (this.state.page === PAGES.START) {
-            return (<Start pushedStart={() => this.setState({ page: PAGES.GAME }) } />);
-        } else if (this.state.page === PAGES.GAME){
-            return (<Game onGameEnd={(lastGameScore, allMoles, fedMoles) => this.setState({ page: PAGES.END, lastGameScore, allMoles, fedMoles })}/>);
+            return (<Start pushedStart={() => this.setState({ page: PAGES.GAME })} />);
+        } else if (this.state.page === PAGES.GAME) {
+            return (<Game onGameEnd={(lastGameScore, lastGameMolesShown, lastGameMolesFed) => this.setState({
+                page: PAGES.TRY_AGAIN,
+                lastGameScore,
+                lastGameMolesShown,
+                lastGameMolesFed
+            })}/>);
         } else {
-            return <TryAgain score={this.state.lastGameScore} moles={this.state.allMoles} fedMoles={this.state.fedMoles} pushedTryAgain={() => this.setState({ page: PAGES.GAME }) }/>
+            return <TryAgain score={this.state.lastGameScore} moles={this.state.lastGameMolesShown} fedMoles={this.state.lastGameMolesFed} pushedTryAgain={() => this.setState({ page: PAGES.GAME })} />
         }
-
     }
 }
 

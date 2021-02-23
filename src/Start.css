@@ -16,8 +16,6 @@
   font-weight: 700;
   color: rgb(245,245,245);
   text-shadow: 0 -1px rgba(0,0,0,.1);
-  text-decoration: none;
-  user-select: none;
   padding: .1em 1em;
   outline: none;
   border: none;
@@ -47,22 +45,13 @@
   font-size: 30px;
   color: #fff;
   font-family: 'Righteous', cursive;
-  font-weight: normal;
-  line-height: 60px;
-  margin-right: 10px;
-}
-
-.Mole {
-  width: 65px;
 }
 
 h1 {
   color: #fff;
   font-family: 'Righteous', cursive;
   font-size: 47px;
-  font-weight: normal;
-  line-height: 60px;
-  margin: 10px 5px 20px;
+  margin: 10px 0 20px;
   text-transform: uppercase;
   text-shadow: 2px 2px 0  rgb(17, 179, 30);
 }

@@ -2,87 +2,78 @@ import React from 'react';
 import './Game.css';
 import timer from './images/clock.png';
 import score from './images/score.png';
+import biteSound from './sounds/bite.mp3';
 
-const ALL_HOLES = 9;
+const HOLES_COUNT = 9;
 const TIME_FOR_LIFE_MOLES_MS = 2500;
-const TIME_FOR_CHECK_STARTGAME_INTERVAL = 100;
-let ONE_MINUTE_MS = 60000;
+const TIME_FOR_CHECK_STARTGAME_INTERVAL_MS = 100;
+const ONE_MINUTE_MS = 60000;
 
 export default class Game extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            moles: new Array(9),
+            moles: new Array(HOLES_COUNT),
             score: 0,
             timer: ONE_MINUTE_MS,
         };
-        this.allMoles = 0;
-        this.fedMoles = 0; 
-        this.StartGame = this.StartGame.bind(this);
+        this.molesShown = 0;
+        this.molesFed = 0;
+        this.biteAudio = new Audio(biteSound);
+        this.startGame = this.startGame.bind(this);
     }
 
     componentDidMount () {
-        this.StartGame();
+        this.startGame();
     }
 
-    StartGame() {
-
-        const stopInterval = () => {
-            clearInterval(interval);
-        }
-
+    startGame() {
         //in this interval function we create and remove moles,
         //we also set a timer and repeat the current function until the timer expires
-        const interval = setInterval(
-            () => {
-            const MolesStorage = [...this.state.moles];
-            let currentCountMoles = this.allMoles;
-            let currentTime = Date.now();
-            let timeLeft = this.state.timer;
+        const interval = setInterval(() => {
+            if (this.state.timer < TIME_FOR_CHECK_STARTGAME_INTERVAL_MS) {
+                clearInterval(interval);
+                this.props.onGameEnd(this.state.score, this.molesShown, this.molesFed);
+                return;
+            }
 
-                if (timeLeft >= TIME_FOR_CHECK_STARTGAME_INTERVAL) {
-                    timeLeft = (timeLeft - TIME_FOR_CHECK_STARTGAME_INTERVAL);
-                    this.setState({timer: timeLeft});
-                } else {
-                    stopInterval();
-                    this.props.onGameEnd(this.state.score, this.allMoles, this.fedMoles);
-                    return;
-                }
+            const moles = [...this.state.moles];
+            const currentTime = Date.now();
 
-                for (let i = 0; i < ALL_HOLES; i++) {
-                    if (MolesStorage[i] === undefined) {
-                        const probability = Math.random();
+            for (let i = 0; i < HOLES_COUNT; i++) {
+                if (moles[i] === undefined) {
+                    const probability = Math.random();
 
-                        if (probability < 0.02) {
-                            MolesStorage[i] = Date.now();
-                            currentCountMoles += 1;
-                        }
+                    if (probability < 0.02) {
+                        moles[i] = Date.now();
+                        this.molesShown += 1;
                     }
-
-                    if (currentTime - MolesStorage[i] > TIME_FOR_LIFE_MOLES_MS) {
-                        delete MolesStorage[i];
-                    }
+                } else if (currentTime - moles[i] > TIME_FOR_LIFE_MOLES_MS) {
+                    moles[i] = undefined;
                 }
-                this.allMoles = currentCountMoles;
-                this.setState({moles: [...MolesStorage]});
-        }, TIME_FOR_CHECK_STARTGAME_INTERVAL
-        );
+            }
+
+            this.setState({
+                moles,
+                timer: this.state.timer - TIME_FOR_CHECK_STARTGAME_INTERVAL_MS
+            });
+        }, TIME_FOR_CHECK_STARTGAME_INTERVAL_MS);
     }
 
     //this component allows to remove moles with a click,
     //increases the score, and calculates how many moles we fed
     onMoleFed(key) {
-        let newScore = this.state.score;
-        let countFedMoles = this.fedMoles;
-        const MolesStorage = [...this.state.moles];
-        
-        if (MolesStorage[key] !== undefined) {
-            MolesStorage[key] = undefined;
-            newScore += 5;
-            countFedMoles += 1;
+        if (this.state.moles[key] === undefined) {
+            return;
         }
-        this.fedMoles = countFedMoles;
-        this.setState({moles: [...MolesStorage], score: newScore});
+
+        const moles = [...this.state.moles];
+        let newScore = this.state.score;
+        moles[key] = undefined;
+        newScore += 5;
+        this.molesFed += 1;
+        this.biteAudio.play();
+        this.setState({ moles, score: newScore });
     }
 
     render() {
@@ -103,7 +94,7 @@ export default class Game extends React.Component {
                         <img src={timer} alt="timer"/>
                         <span>{Math.floor(this.state.timer / 1000)}</span>
                     </div>
-                </div>     
+                </div>
             </div>
         )
     }

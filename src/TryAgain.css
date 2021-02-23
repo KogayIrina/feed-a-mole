@@ -1,60 +1,51 @@
-.Conteiner {
+.Container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
   background: linear-gradient(rgb(33, 126, 33), rgb(32, 109, 32), rgb(3, 83, 3));
   width: 400px;
   height: 400px;
-}
-
-.Wrapper {
-  margin-bottom: 50px;
+  max-height: 400px;
 }
 
 .TryAgainButton {
-    width: 250px;
-    height: 65px;
-    margin-left: 75px;
-    margin-right: 75px;
-    margin-bottom: 20px;
-    font-family: Arial,Helvetica,FreeSans,"Liberation Sans","Nimbus Sans L",sans-serif;
-    font-size: 1.5em;
-    font-weight: 700;
-    color: rgb(245,245,245);
-    text-shadow: 0 -1px rgba(0,0,0,.1);
-    padding: .3em 1em;
-    outline: none;
-    border: none;
-    border-radius: 3px;
-    background: #eb9999 linear-gradient(#c2a9a9, #cf1919);
-    box-shadow: inset #920505 0 -1px 1px, inset 0 1px 1px #750710, #610b0b 0 0 0 1px, rgba(0,0,0,.3) 0 2px 5px;
-    -webkit-animation: pulsate 1.2s linear infinite;
-    animation: pulsate 1.2s linear infinite;
+  font-family: Arial,Helvetica,FreeSans,"Liberation Sans","Nimbus Sans L",sans-serif;
+  font-size: 2.5em;
+  font-weight: 700;
+  color: rgb(245,245,245);
+  text-shadow: 0 -1px rgba(0,0,0,.1);
+  text-decoration: none;
+  user-select: none;
+  padding: .1em 1em;
+  outline: none;
+  border: none;
+  border-radius: 3px;
+  background: #9c0c0c linear-gradient(#912727, #cf1919);
+  box-shadow: inset #920505 0 -1px 1px, inset 0 1px 1px #750710, #610b0b 0 0 0 1px, rgba(0,0,0,.3) 0 2px 5px;
+  -webkit-animation: pulsate 1.2s linear infinite;
+  animation: pulsate 1.2s linear infinite;
+  cursor: url('./images/strawberry.png'), pointer;
 }
 
 .GameOver {
-    display: flex;
-    flex-direction: row-reverse;
-    font-size: 50px;
-    margin-bottom: 20px;
-    margin-right: 55px;
-    color: #fff;
-    font-family: 'Righteous', cursive;
-    font-weight: normal;
-    margin-left: 20px;
-    text-shadow: 2px 2px 0  rgb(17, 179, 30);
+  color: #fff;
+  margin: 0;
+  font-family: 'Righteous', cursive;
+  font-size: 47px;
+  text-shadow: 2px 2px 0  rgb(17, 179, 30);
 }
 
+p {
+  margin: 0;
+}
 .Copyright {
-    font-size: 15px;
-    margin-left: 45px;
-    color: #fff;
+  font-size: 15px;
+  color: #fff;
 }
 
 .Results {
-  display: flexbox;
-  align-items: center;
-  justify-content: center;
   width: 140px;
-  margin-left: 140px;
-  margin-bottom: 10px;
   font-size: 17px;
   color: #fff;
 }

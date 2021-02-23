@@ -5,7 +5,7 @@ import score from './images/score.png';
 
 const ALL_HOLES = 9;
 const TIME_FOR_LIFE_MOLES_MS = 2500;
-const TIME_FOR_CHECK_INTERVAL = 100;
+const TIME_FOR_CHECK_STARTGAME_INTERVAL = 100;
 let ONE_MINUTE_MS = 60000;
 
 export default class Game extends React.Component {
@@ -17,8 +17,7 @@ export default class Game extends React.Component {
             timer: ONE_MINUTE_MS,
         };
         this.allMoles = 0;
-        this.fedMoles = 0;
-        
+        this.fedMoles = 0; 
         this.StartGame = this.StartGame.bind(this);
     }
 
@@ -32,15 +31,17 @@ export default class Game extends React.Component {
             clearInterval(interval);
         }
 
+        //in this interval function we create and remove moles,
+        //we also set a timer and repeat the current function until the timer expires
         const interval = setInterval(
             () => {
-            const newMoles = [...this.state.moles];
+            const MolesStorage = [...this.state.moles];
             let currentCountMoles = this.allMoles;
             let currentTime = Date.now();
-            let timeLeft = this.state.timer
+            let timeLeft = this.state.timer;
 
-                if (timeLeft >= TIME_FOR_CHECK_INTERVAL) {
-                    timeLeft = (timeLeft - TIME_FOR_CHECK_INTERVAL);
+                if (timeLeft >= TIME_FOR_CHECK_STARTGAME_INTERVAL) {
+                    timeLeft = (timeLeft - TIME_FOR_CHECK_STARTGAME_INTERVAL);
                     this.setState({timer: timeLeft});
                 } else {
                     stopInterval();
@@ -48,42 +49,45 @@ export default class Game extends React.Component {
                     return;
                 }
 
-                for (let index = 0; index < ALL_HOLES; index++) {
-                    if(newMoles[index] === undefined) {
-                        let probability = Math.random();
+                for (let i = 0; i < ALL_HOLES; i++) {
+                    if (MolesStorage[i] === undefined) {
+                        const probability = Math.random();
+
                         if (probability < 0.02) {
-                            newMoles[index] = Date.now();
+                            MolesStorage[i] = Date.now();
                             currentCountMoles += 1;
                         }
                     }
 
-                    if (currentTime - newMoles[index] > TIME_FOR_LIFE_MOLES_MS) {
-                        delete newMoles[index];
+                    if (currentTime - MolesStorage[i] > TIME_FOR_LIFE_MOLES_MS) {
+                        delete MolesStorage[i];
                     }
                 }
                 this.allMoles = currentCountMoles;
-                this.setState({moles: [...newMoles]});
-        }, TIME_FOR_CHECK_INTERVAL
+                this.setState({moles: [...MolesStorage]});
+        }, TIME_FOR_CHECK_STARTGAME_INTERVAL
         );
     }
 
+    //this component allows to remove moles with a click,
+    //increases the score, and calculates how many moles we fed
     onMoleFed(key) {
         let newScore = this.state.score;
         let countFedMoles = this.fedMoles;
-        const newMoles = [...this.state.moles];
+        const MolesStorage = [...this.state.moles];
         
-        if (newMoles[key] !== undefined) {
-            newMoles[key] = undefined;
+        if (MolesStorage[key] !== undefined) {
+            MolesStorage[key] = undefined;
             newScore += 5;
             countFedMoles += 1;
         }
         this.fedMoles = countFedMoles;
-        this.setState({moles: [...newMoles], score: newScore});
+        this.setState({moles: [...MolesStorage], score: newScore});
     }
 
     render() {
         const holes = [];
-
+        //The curious fact. If we were to use var instead of let, this function wouldn't work
         for (let i = 0; i < 9; i++) {
             holes.push(<div key={i} className={this.state.moles[i] ? 'MoleHole' : 'Hole'} onClick={() => this.onMoleFed(i)} ></div>);
         }
@@ -104,5 +108,3 @@ export default class Game extends React.Component {
         )
     }
 }
-
-

@@ -14,13 +14,11 @@ export default class Start extends React.Component {
 
     render() {
         return (
-            <div className="Conteiner">
-                <div>
-                    <img className={'Mole'} src={mole} alt="mole" />
-                    <h1>FEED-A-MOLE</h1>
-                    <h2 className={"Play"}>Let's play!</h2>
-                    <button className={'StartButton'} onClick={this.handleClick}>START</button>
-                </div>
+            <div className="Container">
+                <img className={'Mole'} src={mole} alt="mole" />
+                <h1>FEED-A-MOLE</h1>
+                <p className={"Play"}>Let's play!</p>
+                <button className={'StartButton'} onClick={this.handleClick}>START</button>
             </div> 
         );
     }

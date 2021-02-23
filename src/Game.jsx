@@ -3,6 +3,7 @@ import './Game.css';
 import timer from './images/clock.png';
 import score from './images/score.png';
 import biteSound from './sounds/bite.mp3';
+import './App.css'
 
 const HOLES_COUNT = 9;
 const TIME_FOR_LIFE_MOLES_MS = 2500;
@@ -84,15 +85,17 @@ export default class Game extends React.Component {
         }
         return (
             <div>
-                <div className={'AllHoles'}>
+                <div className='AllHoles'>
                     {holes}
-                    <div className={'Stat'}>
-                        <img src={score} alt="score"/>
-                        <span>{this.state.score}</span>
-                    </div>
-                    <div className={'Stat'}>
-                        <img src={timer} alt="timer"/>
-                        <span>{Math.floor(this.state.timer / 1000)}</span>
+                    <div className='Stat'>
+                        <div>
+                            <img src={score} alt="score"/>
+                            <span>{this.state.score}</span>
+                        </div>
+                        <div>
+                            <img src={timer} alt="timer"/>
+                            <span>{Math.floor(this.state.timer / 1000)}</span>
+                        </div>
                     </div>
                 </div>
             </div>

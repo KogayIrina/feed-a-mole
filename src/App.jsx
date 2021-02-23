@@ -22,7 +22,7 @@ export default class App extends React.Component {
 
     render() {
         if (this.state.page === PAGES.START) {
-            return (<Start pushedStart={() => this.setState({ page: PAGES.GAME })} />);
+            return (<Start onStartPushed={() => this.setState({ page: PAGES.GAME })} />);
         } else if (this.state.page === PAGES.GAME) {
             return (<Game onGameEnd={(lastGameScore, lastGameMolesShown, lastGameMolesFed) => this.setState({
                 page: PAGES.TRY_AGAIN,
@@ -31,7 +31,7 @@ export default class App extends React.Component {
                 lastGameMolesFed
             })}/>);
         } else {
-            return <TryAgain score={this.state.lastGameScore} moles={this.state.lastGameMolesShown} fedMoles={this.state.lastGameMolesFed} pushedTryAgain={() => this.setState({ page: PAGES.GAME })} />
+            return <TryAgain score={this.state.lastGameScore} moles={this.state.lastGameMolesShown} fedMoles={this.state.lastGameMolesFed} onTryAgainPushed={() => this.setState({ page: PAGES.GAME })} />
         }
     }
 }

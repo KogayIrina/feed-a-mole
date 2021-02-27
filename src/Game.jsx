@@ -9,8 +9,8 @@ const HOLES_COUNT = 9;
 const TIME_FOR_LIFE_MOLES_MS = 2500;
 const TIME_FOR_CHECK_STARTGAME_INTERVAL_MS = 100;
 const ONE_MINUTE_MS = 60000;
-const BONUS_SCORES = 5;
-const FED_MOLE = 1;
+const FED_MOLE_SCORES = 5;
+
 
 export default class Game extends React.Component {
     constructor(props) {
@@ -73,8 +73,8 @@ export default class Game extends React.Component {
         const moles = [...this.state.moles];
         let newScore = this.state.score;
         moles[key] = undefined;
-        newScore += BONUS_SCORES;
-        this.molesFed += FED_MOLE;
+        newScore += FED_MOLE_SCORES;
+        this.molesFed += 1;
         this.biteAudio.play();
         this.setState({ moles, score: newScore });
     }

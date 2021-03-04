@@ -24,18 +24,23 @@ export default class Game extends React.Component {
         this.molesFed = 0;
         this.biteAudio = new Audio(biteSound);
         this.startGame = this.startGame.bind(this);
+        this.interval = undefined;
     }
 
-    componentDidMount () {
+    componentDidMount() {
         this.startGame();
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.interval);
     }
 
     startGame() {
         //in this interval function we create and remove moles,
         //we also set a timer and repeat the current function until the timer expires
-        const interval = setInterval(() => {
+        this.interval = setInterval(() => {
             if (this.state.timer < TIME_FOR_CHECK_STARTGAME_INTERVAL_MS) {
-                clearInterval(interval);
+                clearInterval(this.interval);
                 this.props.onGameEnd(this.state.score, this.molesShown, this.molesFed);
                 return;
             }
